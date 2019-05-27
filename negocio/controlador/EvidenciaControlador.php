@@ -69,4 +69,14 @@ class EvidenciaControlador extends GenericoControlador {
         }
     }
 
+    public function listarArchivo() {
+        $datos = $this->evidenciaDAO->listarArchivo($_SESSION['usuario']->cedula);
+        if (is_array($datos)) {
+            $vista = Util::cargarVista('./vista/evidencia/listarArchivo.php', $datos);
+            echo json_encode(['mensaje' => '1', 'dato' => $vista]);
+        } else {
+            echo json_encode(['mensaje' => '0', 'dato' => 'No existe evidencias registradas']);
+        }
+    }
+
 }
