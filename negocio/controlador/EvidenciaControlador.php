@@ -20,49 +20,52 @@ class EvidenciaControlador extends GenericoControlador {
         $this->evidenciaVO = new EvidenciaVO();
     }
 
-        public function registrarArchivo() {
-        $cedula = $_POST['inpCedula'];
-        $archivo = $_FILES['inpArchivo'];
+    public function cargarArchivo($cedula, $random, $archivo) {
+        if (!is_dir('./evidencia/' . $cedula)) {
+            mkdir('./evidencia/' . $cedula);
+            if (!is_file("./evidencia/$cedula/$random.jpg")) {
+                if (move_uploaded_file($archivo['tmp_name'], "./evidencia/$cedula/$random.jpg")) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            } else {
+                return 3;
+            }
+        } else {
+            if (!is_file("./evidencia/$cedula/$random.jpg")) {
+                if (move_uploaded_file($archivo['tmp_name'], "./evidencia/$cedula/$random.jpg")) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            } else {
+                return 3;
+            }
+        }
+    }
+
+    public function registrarArchivo() {
+
         $random = rand(0, 20000000);
-        
-        $this->evidenciaVO->setIsbn($_POST['inpIsbn']);
-        $this->evidenciaVO->setIsbn($_POST['inpIsbn']);
-        $this->evidenciaVO->setIsbn($_POST['inpIsbn']);
+
+        $this->evidenciaVO->setRuta($_FILES['inpArchivo']);
+        $this->evidenciaVO->setCedula($_POST['inpCedula']);
 
         if ($this->cargarArchivo($cedula, $random, $archivo) == 1) {
-            //$cedula lo captura de la sesiòn $_SESSION
             try {
-                
-                echo json_encode(["codigo" => "1", "mensaje" => "carga exitosa"]);
+                $resultado = $this->evidenciaDAO->registrarArchivo($this->evidenciaVO);
+                if ($resultado == 1) {
+                    $vista = Util::cargarVista('./vista/menu/menuUser.php');
+                    echo json_encode(array("mensaje" => $resultado == 1, "dato" => "Carga exitosa"));
+                }
             } catch (PDOException $ex) {
-                echo json_encode(["codigo" => "2", "mensaje" => "Falla en SQL" . $ex->getMessage()]);
+                echo json_encode(array("mensaje" => $resultado == 2, "dato" => "Falla en SQL" . $ex->getMessage()));
             }
         } else if ($this->cargarArchivo() == 2) {
-            echo json_encode(["codigo" => "2", "mensaje" => "Archivo repetido"]);
+            echo json_encode(array("mensaje" => $resultado == 3, "dato" => "Archivo repetido"));
         } else if ($this->cargarArchivo() == 3) {
-            echo json_encode(["codigo" => "3", "mensaje" => "Falla al subir el archivo"]);
-        }
-    }
-    
-    public function consultarLibro($isbn) {
-        //falta código consulta unica
-        $consulta = $this->libroDAO->consultarLibro($isbn);
-        if (is_object($consulta)) {
-            echo json_encode(array("mensaje" => 3, "dato" => "libro repetido"));
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function listarLibro() {
-        $datos = $this->libroDAO->listarLibro($_SESSION['usuario']->cedula);
-
-        if (is_array($datos)) {
-            $vista = Util::cargarVista('./vista/libro/listarLibro.php', $datos);
-            echo json_encode(['mensaje' => '1', 'dato' => $vista]);
-        } else {
-            echo json_encode(['mensaje' => '0', 'dato' => 'No existe libros registrados']);
+            echo json_encode(array("mensaje" => $resultado == 4, "dato" => "Falla al subir el archivo"));
         }
     }
 
