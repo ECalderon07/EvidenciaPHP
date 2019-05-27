@@ -30,11 +30,10 @@ define('LIBRO_ELIMINAR', array('url' => $rutaPrincipal . '/libro/eliminarLibro',
 define('LIBRO_CONSULTAR', array('url' => $rutaPrincipal . '/libro/consultarLibro', 'controlador' => 'LibroControlador', 'metodo' => 'consultarLibro'));
 define('LIBRO_LISTAR', array('url' => $rutaPrincipal . '/libro/listarLibro', 'controlador' => 'LibroControlador', 'metodo' => 'listarLibro'));
 define('LIBRO_EDITAR', array('url' => $rutaPrincipal . '/libro/actualizarLibro', 'controlador' => 'LibroControlador', 'metodo' => 'editarLibro'));
-
 define('LIBRO_LISTAR_GENERO', array('url' => $rutaPrincipal . '/libro/listarLibroGenero', 'controlador' => 'LibroControlador', 'metodo' => 'vistaListarGenero'));
 
-
 //evidencia controlador
+
 define('EVIDENCIA_LISTAR', array('url' => $rutaPrincipal . '/evidencia/listarArchivo', 'controlador' => 'EvidenciaControlador', 'metodo' => 'listarArchivo'));
 define('EVIDENCIA_VISTA_REGISTRAR', array('url' => $rutaPrincipal . '/evidencia/vistaRegistrarLibro', 'controlador' => 'EvidenciaControlador', 'metodo' => 'vistaRegistrarArchivo'));
 define('EVIDENCIA_REGISTRAR', array('url' => $rutaPrincipal . '/evidencia/registrarArchivo', 'controlador' => 'EvidenciaControlador', 'metodo' => 'registrarArchivo'));
