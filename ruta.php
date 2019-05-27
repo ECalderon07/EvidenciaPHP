@@ -34,4 +34,8 @@ define('LIBRO_EDITAR', array('url' => $rutaPrincipal . '/libro/actualizarLibro',
 define('LIBRO_LISTAR_GENERO', array('url' => $rutaPrincipal . '/libro/listarLibroGenero', 'controlador' => 'LibroControlador', 'metodo' => 'vistaListarGenero'));
 
 
-//echo LIBRO_LISTAR['controlador'];
+//evidencia controlador
+define('EVIDENCIA_LISTAR', array('url' => $rutaPrincipal . '/evidencia/listarArchivo', 'controlador' => 'EvidenciaControlador', 'metodo' => 'listarArchivo'));
+define('EVIDENCIA_VISTA_REGISTRAR', array('url' => $rutaPrincipal . '/evidencia/vistaRegistrarLibro', 'controlador' => 'EvidenciaControlador', 'metodo' => 'vistaRegistrarArchivo'));
+define('EVIDENCIA_REGISTRAR', array('url' => $rutaPrincipal . '/evidencia/registrarArchivo', 'controlador' => 'EvidenciaControlador', 'metodo' => 'registrarArchivo'));
+
