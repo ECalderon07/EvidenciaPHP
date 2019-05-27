@@ -45,6 +45,11 @@ class EvidenciaControlador extends GenericoControlador {
         }
     }
 
+    public function vistaRegistrarArchivo() {
+        $vista = Util::cargarVista('./vista/evidencia/registrarArchivo.php');
+        echo json_encode(array("mensaje" => "1", "dato" => $vista));
+    }
+
     public function registrarArchivo() {
 
         $random = rand(0, 20000000);
